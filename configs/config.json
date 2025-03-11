@@ -1,0 +1,8 @@
+{
+    "max_retries_num": 0,
+    "datetime": null,
+    "sleep_seconds": 900,
+    "output_directory": "outputs",
+    "query": "",
+    "pipeline": ""
+}

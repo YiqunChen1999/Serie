@@ -1,0 +1,108 @@
+[
+    {
+        "url": "https://arxiv.org/abs/2409.08264",
+        "tags": ["WindowsAgentArena", "benchmark", "vision-language"],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": true, "subdir": "Vision-Language"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2502.20622",
+        "tags": ["RTGen", "detection", "real-time", "open-vocabulary", "vision-language"],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision-Language"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2501.16981",
+        "tags": ["detection", "open-vocabulary", "vision-language", "F-ViT"],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision-Language"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2501.16981",
+        "tags": ["detection", "open-vocabulary", "vision-language", "F-ViT"],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision-Language"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2503.01785",
+        "tags": ["detection", "Visual-RFT", "open-vocabulary", "vision-language", "RL"],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision-Language"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2503.01463",
+        "tags": ["detection", "MI-DETR"],
+        "venue": "CVPR'25",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2503.01342",
+        "tags": ["detection", "UFO", "segmentation", "vision-language"],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision-Language"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2410.11774",
+        "tags": ["detection", "long-tail", "FRACAL"],
+        "venue": "CVPR'25",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2501.",
+        "tags": ["detection", "open-vocabulary", "vision-language", "VMCNet"],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision-Language"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2503.04107",
+        "tags": ["detection", "RTP-DETR"],
+        "venue": "ACM MM'24",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2501.16981",
+        "tags": ["open-vocabulary", "detection", "vision-language", "VMCNet"],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision-Language"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2501.16467",
+        "tags": ["vision-language", "segmentation", "LangSeg"],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision-Language"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2501.16022",
+        "tags": [
+            "segmentation", "sketch"
+        ],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": false, "subdir": "Vision"}
+        }
+    }
+]
