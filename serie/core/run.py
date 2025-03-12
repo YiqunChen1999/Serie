@@ -26,6 +26,7 @@ def forward_plugins(cfgs: Configs,
                     f"Sleeping for {cfgs.sleep_seconds} seconds.")
         time.sleep(cfgs.sleep_seconds)
         papers = forward_plugins_once(cfgs, plugin_names, plugins_configs)
+    logger.info(f"Finished running. Processed {len(papers)} papers.")
     return papers
 
 

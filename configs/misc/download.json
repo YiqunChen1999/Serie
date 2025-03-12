@@ -1,15 +1,15 @@
 [
     {
-        "url": "https://arxiv.org/abs/2409.08264",
-        "tags": ["WindowsAgentArena", "benchmark", "vision-language"],
+        "url": "http://arxiv.org/abs/2503.08507v1",
+        "tags": ["RexSeek", "detection", "vision-language", "HumanRef", "dataset", "benchmark"],
         "venue": "arxiv",
         "local_plugin_data": {
             "Downloader": {"download": true, "subdir": "Vision-Language"}
         }
     },
     {
-        "url": "http://arxiv.org/abs/2502.20622",
-        "tags": ["RTGen", "detection", "real-time", "open-vocabulary", "vision-language"],
+        "url": "http://arxiv.org/abs/2411.18363v3",
+        "tags": ["ChatRex", "detection", "vision-language", "open-vocabulary", "Rexverse-2M", "dataset"],
         "venue": "arxiv",
         "local_plugin_data": {
             "Downloader": {"download": false, "subdir": "Vision-Language"}

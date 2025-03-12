@@ -3,12 +3,12 @@ import datetime
 import os.path as osp
 
 from dataclasses import dataclass, field
-from serie.utils.io import load_json
+from serie.utils.io import import_config
 from serie.utils.parser import ArgumentParser
 
 
-PATH = __file__.replace("serie/serie", "serie/configs").replace("py", "json")
-DEFAULT: dict = load_json(PATH)
+PATH = __file__.replace("serie/serie", "serie/configs")
+DEFAULT: dict = import_config(PATH)
 
 
 @dataclass

@@ -2,7 +2,7 @@
 
 config = {
     "LanguageModelBasedKeywordsFilter": {
-        "model": "siliconflow-deepseek-v3",
+        "model": "dashscope-deepseek-v3-latest",
         "batch_mode": False,
         "concurrent_mode": True,
         "interested_topics": {

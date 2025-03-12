@@ -1,4 +1,5 @@
-{
+
+config = {
     "noset": {},
     "siliconflow-deepseek-v3": {
         "base_url": "https://api.siliconflow.cn/v1/",

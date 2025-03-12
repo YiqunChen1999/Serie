@@ -151,7 +151,12 @@ class Translator(BasePlugin):
         if self.translate_all_papers:
             return True
         plugin_data = result.get_plugin_data(self.keywords_filter_plugin)
-        assert isinstance(plugin_data, BaseKeywordsFilterData)
+        if plugin_data is None:
+            return False
+        assert isinstance(plugin_data, BaseKeywordsFilterData), (
+            f"Plugin {self.keywords_filter_plugin} "
+            f"must be a KeywordsFilter plugin."
+        )
         translate = False
         if plugin_data and len(plugin_data.keywords) > 0:
             for keyword in plugin_data.keywords:

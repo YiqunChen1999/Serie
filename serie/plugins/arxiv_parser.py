@@ -73,6 +73,27 @@ class ArxivParser(BasePlugin):
                         for k, v in val.items():
                             setattr(data, k, v)
             papers.extend(results)
+        papers = self.deduplicate(papers)
+        return papers
+
+    def deduplicate(self, papers: list[Paper]):
+        logger.info(f"Deduplicating papers for {len(papers)} items papers...")
+        if len(papers) == 0:
+            return papers
+        if len(papers) == 1:
+            logger.info("Only one paper found. No deduplication needed.")
+            return papers
+        # Deduplicate papers based on URL
+        # Use a dictionary to track unique URLs
+        # and keep the first occurrence of each URL
+        # This will remove duplicates while preserving the order
+        # of the original list
+        mapping = {}
+        for p in papers:
+            if p.url.href not in mapping.keys():
+                mapping[p.url.href] = p
+        papers = list(mapping.values())
+        logger.info(f"Deduplication complete. {len(papers)} unique papers.")
         return papers
 
     def check_metas(self, metainfos: list[dict]):
