@@ -56,10 +56,11 @@ class DefaultKeywordsFilter(BasePlugin):
     def __init__(self,
                  keywords: dict[str, list[str]] | None = None,
                  ignorance: dict[str, list[str]] | None = None,
+                 overwrite: bool = False,
                  version: str = "",
                  dependencies: list[str] | None = None,
                  **kwargs) -> None:
-        super().__init__(version, dependencies, **kwargs)
+        super().__init__(overwrite, version, dependencies, **kwargs)
         self.keywords = keywords or {}
         self.ignorance = ignorance or {}
 

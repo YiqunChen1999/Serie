@@ -36,10 +36,11 @@ class ECCVParser(BasePlugin):
             paper_online_date: str,
             max_retries: int = 10,
             num_requested: int | None = None,
+            overwrite: bool = False,
             version: str = "",
             dependencies: list[str] | None = None,
             **kwargs) -> None:
-        super().__init__(version, dependencies, **kwargs)
+        super().__init__(overwrite, version, dependencies, **kwargs)
         conference = "ECCV"
         if year % 2 != 0:
             logger.warning("ECCV is held every even year.")

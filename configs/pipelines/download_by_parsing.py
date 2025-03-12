@@ -3,7 +3,7 @@
 config = {
     "DownloadByParsing": {
         "plugins": [
-            "ResultLoader", "MarkdownMetainfoParser", "Downloader"
+            "ResultLoader", "DownloaderGivenMarkdown", "Downloader"
         ]
     }
 }

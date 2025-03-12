@@ -8,7 +8,7 @@ from serie.utils.parser import ArgumentParser
 
 
 PATH = __file__.replace("serie/serie", "serie/configs").replace("py", "json")
-DEFAULT = load_json(PATH)
+DEFAULT: dict = load_json(PATH)
 
 
 @dataclass
@@ -39,6 +39,14 @@ class Configs:
                 "the config with the same name of .py file of target pipeline "
                 "will be used. The value is the file name under the folder"
                 "`configs/pipelines`."
+            )
+        })
+    overwrite: bool = field(
+        default=DEFAULT.get('overwrite', False),
+        metadata={
+            "help": (
+                "Whether to overwrite the existing files. "
+                "If set to `True`, the existing files will be overwritten."
             )
         })
 

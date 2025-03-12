@@ -29,7 +29,12 @@ class ArxivParser(BasePlugin):
             datetime: str,
             categories: str = "(cat:cs.CV OR cat:cs.AI OR cat:cs.LG)",
             query: str = "",
-            json_file: str = ""):
+            json_file: str = "",
+            overwrite: bool = False,
+            version: str = "",
+            dependencies: list[str] | None = None,
+            **kwargs):
+        super().__init__(overwrite, version, dependencies, **kwargs)
         self.categories = categories
         self.datetime = datetime
         if not query:
@@ -117,7 +122,7 @@ def create_paper_from_arxiv(result: arxiv.Result):
         authors=[a.name for a in result.authors],
         abstract=result.summary,
         comment=result.comment or "",
-        venue=result.journal_ref or "",
+        venue=result.journal_ref or "arxiv",
         doi=result.doi or "",
         primary_category=result.primary_category,
         categories=result.categories,

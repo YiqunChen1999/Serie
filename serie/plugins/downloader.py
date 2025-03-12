@@ -209,8 +209,9 @@ class Downloader(BasePlugin):
                  dir_pdf: str = "",
                  dir_code: str = "",
                  dir_markdown_note: str = "",
+                 overwrite: bool = False,
                  *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+        super().__init__(overwrite, *args, **kwargs)
         self.dir_pdf = dir_pdf
         self.dir_code = dir_code
         self.dir_markdown_note = dir_markdown_note
@@ -249,8 +250,9 @@ class DownloaderGivenMarkdown(BasePlugin):
                  dir_pdf: str = "",
                  dir_code: str = "",
                  dir_markdown_note: str = "",
+                 overwrite: bool = False,
                  *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+        super().__init__(overwrite, *args, **kwargs)
         self.dir_markdown_src = dir_markdown_src
         self.dir_pdf = dir_pdf
         self.dir_code = dir_code
@@ -262,6 +264,9 @@ class DownloaderGivenMarkdown(BasePlugin):
             data = paper.get_plugin_data(
                 DownloaderGivenMarkdownData.plugin_name
             )
+            if data is None:
+                data = DownloaderGivenMarkdownData()
+                paper.add_plugin_data(data)
             assert isinstance(data, DownloaderGivenMarkdownData)
             if not data.download:
                 continue

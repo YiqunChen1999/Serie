@@ -3,7 +3,8 @@ from dataclasses import dataclass
 
 from serie.utils.logging import create_logger
 from serie.base.plugin import (
-    BasePlugin, BasePluginData, BaseKeywordsFilterData, GlobalPluginData
+    BasePlugin, PluginStatus, BasePluginData,
+    BaseKeywordsFilterData, GlobalPluginData,
 )
 from serie.base.paper import Paper
 from serie.core.agent import Agent, TaskMode
@@ -50,7 +51,12 @@ class Translator(BasePlugin):
             translate_all_papers: bool = False,
             keywords_filter_plugin: str = "",
             max_workers: int = 16,
-            max_tasks_per_minute: int = 16):
+            max_tasks_per_minute: int = 16,
+            overwrite: bool = False,
+            version: str = "",
+            dependencies: list[str] | None = None,
+            **kwargs) -> None:
+        super().__init__(overwrite, version, dependencies, **kwargs)
         self.agent = Agent(model)
         self.mode = TaskMode(mode) if isinstance(mode, str) else mode
         self.prompt = prompt or translation_instruction()
@@ -58,6 +64,17 @@ class Translator(BasePlugin):
         self.keywords_filter_plugin = keywords_filter_plugin
         self.max_workers = max_workers
         self.max_tasks_per_minute = max_tasks_per_minute
+
+    def check_status(
+            self, papers: list[Paper], global_plugin_data: GlobalPluginData):
+        datas = [p.get_plugin_data(plugin_name()) for p in papers]
+        datas = [d for d in datas if d is not None]
+        for d in datas:
+            assert isinstance(d, TranslatorData)
+            if d.translated_summary:
+                self.status = PluginStatus.DONE
+                return
+        self.status = PluginStatus.TODO
 
     def process(self,
                 papers: list[Paper],

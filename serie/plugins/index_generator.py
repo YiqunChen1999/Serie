@@ -54,10 +54,11 @@ class DownloadedPaperIndexGenerator(BasePlugin):
                  date: str,
                  index_directory: str,
                  papers_note_folders: list[str],
+                 overwrite: bool = False,
                  version: str = "",
                  dependencies: list[str] | None = None,
                  **kwargs) -> None:
-        super().__init__(version, dependencies, **kwargs)
+        super().__init__(overwrite, version, dependencies, **kwargs)
         self.date = date
         self.index_directory = osp.abspath(index_directory)
         self.papers_note_folders = papers_note_folders

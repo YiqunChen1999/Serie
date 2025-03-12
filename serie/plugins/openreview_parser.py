@@ -29,10 +29,11 @@ class OpenReviewParser(BasePlugin):
             output_directory: str,
             max_retries: int = 3,
             num_requested: int | None = None,
+            overwrite: bool = False,
             version: str = "",
             dependencies: list[str] | None = None,
             **kwargs) -> None:
-        super().__init__(version, dependencies, **kwargs)
+        super().__init__(overwrite, version, dependencies, **kwargs)
         self.year = year
         self.conference = conference
         self.output_directory = output_directory

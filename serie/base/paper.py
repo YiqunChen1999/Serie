@@ -56,6 +56,10 @@ class Link:
     def __str__(self) -> str:
         return self.href
 
+    def __post_init__(self):
+        if isinstance(self.tag, str):
+            self.tag = LinkEnum(self.tag.lower())
+
     def asdict(self):
         return {
             "href": self.href,

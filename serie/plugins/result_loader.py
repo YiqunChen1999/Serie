@@ -22,7 +22,8 @@ class ResultLoaderData(BasePluginData):
 
 
 class ResultLoader(BasePlugin):
-    def __init__(self, output_directory: str):
+    def __init__(self, output_directory: str, **kwargs):
+        super().__init__(**kwargs)
         self.output_directory = output_directory
 
     def process(self,
@@ -33,5 +34,10 @@ class ResultLoader(BasePlugin):
     def load_papers(self) -> list[Paper]:
         path = os.path.join(self.output_directory, 'papers.jsonl')
         logger.info(f"Loading results from {path}")
+        if not os.path.exists(path):
+            logger.warning(f"{path} does not exist.")
+            return []
         results = load_jsonl(path)
+        if not results:
+            logger.warning("No papers found in the JSONL file.")
         return [create_paper_from_dict(r) for r in results]

@@ -61,7 +61,9 @@ def check_plugin_data_class(papers: list[Paper]):
             data = paper.local_plugin_data[key]
             data_cls = get_plugin_cls(key + "Data")
             if isinstance(data, dict):
-                data: BasePluginData = data_cls(key + "Data", **data)
+                if "plugin_name" not in data.keys():
+                    data["plugin_name"] = key + "Data"
+                data: BasePluginData = data_cls(**data)
             else:
                 assert isinstance(data, data_cls)
             paper.local_plugin_data[key] = data

@@ -3,7 +3,8 @@ from dataclasses import dataclass
 
 from serie.utils.logging import create_logger
 from serie.base.plugin import (
-    BasePlugin, BaseKeywordsFilterData, BasePluginData, GlobalPluginData
+    BasePlugin, BaseKeywordsFilterData, BasePluginData, PluginStatus,
+    GlobalPluginData,
 )
 from serie.base.paper import Paper
 from serie.core.agent import Agent, TaskMode
@@ -81,7 +82,12 @@ class LanguageModelBasedKeywordsFilter(BasePlugin):
             interested_topics: dict[str, str],
             discarded_topics: dict[str, str],
             max_workers: int = 16,
-            max_tasks_per_minute: int = 16):
+            max_tasks_per_minute: int = 16,
+            overwrite: bool = False,
+            version: str = "",
+            dependencies: list[str] | None = None,
+            **kwargs) -> None:
+        super().__init__(overwrite, version, dependencies, **kwargs)
         self.agent = Agent(model)
         self.batch_mode = batch_mode
         self.concurrent_mode = concurrent_mode
@@ -89,6 +95,18 @@ class LanguageModelBasedKeywordsFilter(BasePlugin):
         self.discarded_topics = discarded_topics
         self.max_workers = max_workers
         self.max_tasks_per_minute = max_tasks_per_minute
+
+    def check_status(
+            self, papers: list[Paper], global_plugin_data: GlobalPluginData):
+        datas = [p.get_plugin_data(plugin_name()) for p in papers]
+        keywords = []
+        for d in datas:
+            if isinstance(d, LanguageModelBasedKeywordsFilterData):
+                if len(d.keywords) > 0:
+                    keywords.extend(d.keywords)
+        if len(keywords) > 0:
+            self.status = PluginStatus.DONE
+            return
 
     def process(
             self, papers: list[Paper], global_plugin_data: GlobalPluginData):

@@ -3,6 +3,7 @@
 config = {
     "Request": {
         "plugins": [
+            "ResultLoader",
             "ArxivParser",
             "GitHubLinkParser",
             "DefaultKeywordsFilter",

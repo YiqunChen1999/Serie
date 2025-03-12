@@ -4,7 +4,8 @@ import os.path as osp
 from dataclasses import dataclass
 from serie.utils.logging import create_logger
 from serie.base.plugin import (
-    BaseKeywordsFilterData, BasePlugin, BasePluginData, GlobalPluginData
+    BaseKeywordsFilterData, BasePlugin, BasePluginData, PluginStatus,
+    GlobalPluginData
 )
 from serie.base.paper import Paper
 from serie.base.constants import UNIQUE_PAPER_SIGNATURE
@@ -90,15 +91,32 @@ class ResultSaver(BasePlugin):
                  output_directory: str,
                  markdown_directory: str,
                  keywords_filter_plugin: str = "",
+                 overwrite: bool = False,
                  version: str = "",
                  dependencies: list[str] | None = None,
                  **kwargs) -> None:
-        super().__init__(version, dependencies, **kwargs)
+        super().__init__(overwrite, version, dependencies, **kwargs)
         self.output_directory = output_directory
         self.markdown_directory = markdown_directory
         self.keywords_filter_plugin = keywords_filter_plugin
         os.makedirs(self.output_directory, exist_ok=True)
         os.makedirs(self.markdown_directory, exist_ok=True)
+
+    def check_status(
+            self, papers: list[Paper], global_plugin_data: GlobalPluginData):
+        dates = [
+            p.update_date.strftime("%Y-%m-%d") for p in papers
+        ]
+        dates = list(set(dates))
+        for date in dates:
+            folder = osp.join(self.markdown_directory, date)
+            if not osp.exists(folder):
+                os.makedirs(folder, exist_ok=True)
+            elif len(os.listdir(folder)) > 0:
+                self.status = PluginStatus.DONE
+                return
+            else:
+                self.status = PluginStatus.TODO
 
     def process(self,
                 papers: list[Paper],
