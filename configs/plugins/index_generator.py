@@ -1,8 +1,11 @@
 
+import os.path as osp
+from serie.base.constants import ROOT_PATH
+
 
 config = {
     "DownloadedPaperIndexGenerator": {
-        "index_directory": "../../Notebook/论文笔记/Index",
+        "index_directory": osp.join(ROOT_PATH, "../../Notebook/论文笔记/Index"),
         "papers_note_folders": [
             "论文笔记/NLP",
             "论文笔记/RL",
