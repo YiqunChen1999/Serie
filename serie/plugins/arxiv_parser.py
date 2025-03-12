@@ -37,12 +37,13 @@ class ArxivParser(BasePlugin):
         super().__init__(overwrite, version, dependencies, **kwargs)
         self.categories = categories
         self.datetime = datetime
-        if not query:
-            query = f"{self.categories} AND {self.datetime}"
-        self.query = query
+
         self.json_file = osp.abspath(json_file) if json_file else ""
         if json_file and not osp.exists(json_file):
             raise FileNotFoundError(f"{json_file} does not exist.")
+        if not self.json_file and not query:
+            query = f"{self.categories} AND {self.datetime}"
+        self.query = query
 
     def process(self,
                 papers: list[Paper],

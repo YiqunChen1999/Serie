@@ -12,63 +12,63 @@
         "tags": ["ChatRex", "detection", "vision-language", "open-vocabulary", "Rexverse-2M", "dataset"],
         "venue": "arxiv",
         "local_plugin_data": {
-            "Downloader": {"download": false, "subdir": "Vision-Language"}
+            "Downloader": {"download": true, "subdir": "Vision-Language"}
         }
     },
     {
-        "url": "http://arxiv.org/abs/2501.16981",
-        "tags": ["detection", "open-vocabulary", "vision-language", "F-ViT"],
+        "url": "http://arxiv.org/abs/2501.19255v2",
+        "tags": ["segmentation", "ContextFormer"],
         "venue": "arxiv",
         "local_plugin_data": {
-            "Downloader": {"download": false, "subdir": "Vision-Language"}
+            "Downloader": {"download": true, "subdir": "Vision"}
         }
     },
     {
-        "url": "http://arxiv.org/abs/2501.16981",
-        "tags": ["detection", "open-vocabulary", "vision-language", "F-ViT"],
+        "url": "http://arxiv.org/abs/2503.06520v1",
+        "tags": ["segmentation", "Seg-Zero", "vision-language"],
         "venue": "arxiv",
         "local_plugin_data": {
-            "Downloader": {"download": false, "subdir": "Vision-Language"}
+            "Downloader": {"download": true, "subdir": "Vision-Language"}
         }
     },
     {
-        "url": "http://arxiv.org/abs/2503.01785",
-        "tags": ["detection", "Visual-RFT", "open-vocabulary", "vision-language", "RL"],
-        "venue": "arxiv",
-        "local_plugin_data": {
-            "Downloader": {"download": false, "subdir": "Vision-Language"}
-        }
-    },
-    {
-        "url": "http://arxiv.org/abs/2503.01463",
-        "tags": ["detection", "MI-DETR"],
+        "url": "http://arxiv.org/abs/2503.08625v1",
+        "tags": ["segmentation", "SegAgent", "vision-language"],
         "venue": "CVPR'25",
         "local_plugin_data": {
-            "Downloader": {"download": false, "subdir": "Vision"}
+            "Downloader": {"download": true, "subdir": "Vision-Language"}
         }
     },
     {
-        "url": "http://arxiv.org/abs/2503.01342",
-        "tags": ["detection", "UFO", "segmentation", "vision-language"],
+        "url": "http://arxiv.org/abs/2412.00153v3",
+        "tags": ["segmentation", "ROSE", "open-set"],
         "venue": "arxiv",
         "local_plugin_data": {
-            "Downloader": {"download": false, "subdir": "Vision-Language"}
+            "Downloader": {"download": true, "subdir": "Vision"}
         }
     },
     {
-        "url": "http://arxiv.org/abs/2410.11774",
-        "tags": ["detection", "long-tail", "FRACAL"],
+        "url": "http://arxiv.org/abs/2408.16504v2",
+        "tags": ["segmentation", "PanopticSegmentation"],
+        "venue": "arxiv",
+        "local_plugin_data": {
+            "Downloader": {"download": true, "subdir": "Vision"}
+        }
+    },
+    {
+        "url": "http://arxiv.org/abs/2412.04533v2",
+        "tags": ["segmentation", "Mask-Adapter", "open-vocabulary", "vision-language"],
         "venue": "CVPR'25",
         "local_plugin_data": {
-            "Downloader": {"download": false, "subdir": "Vision"}
+            "Downloader": {"download": true, "subdir": "Vision-Language"}
         }
     },
     {
-        "url": "http://arxiv.org/abs/2501.",
-        "tags": ["detection", "open-vocabulary", "vision-language", "VMCNet"],
+        "url": "http://arxiv.org/abs/2412.06244v2",
+        "tags": ["segmentation", "open-vocabulary", "vision-language", "detection", "DenseVLM"],
         "venue": "arxiv",
         "local_plugin_data": {
-            "Downloader": {"download": false, "subdir": "Vision-Language"}
+            "Downloader": {"download": true, "subdir": "Vision-Language"}
         }
     },
     {
