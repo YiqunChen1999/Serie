@@ -56,5 +56,9 @@ schedule_requests() {
     done
 }
 
-wait_time=${1:-"$(date -v+1d +%Y-%m-%d) 11:45"}
-schedule_requests "$wait_time"
+wait_until_time=${1:-"$(date -v+1d +%Y-%m-%d) 11:45"}
+while true; do
+    schedule_requests "$wait_until_time"
+    wait_until_time=$(date -v+1d -j -f "%Y-%m-%d %H:%M" "$wait_until_time" "+%Y-%m-%d %H:%M")
+    echo "Next scheduled time: $wait_until_time"
+done
