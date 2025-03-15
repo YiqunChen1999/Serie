@@ -181,6 +181,7 @@ class Paper:
                     f"File {path} already exists, skip downloading."
                 )
                 return path
+            logger.info(f"Downloading PDF from {link.href} to {path}")
             downloaded, _ = urlretrieve(link.href, path)
             return downloaded
         else:
