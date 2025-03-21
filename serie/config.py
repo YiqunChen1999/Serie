@@ -1,6 +1,6 @@
-
 import datetime
 import os.path as osp
+from tabulate import tabulate
 
 from dataclasses import dataclass, field
 from serie.utils.io import import_config
@@ -59,11 +59,14 @@ class Configs:
             self.pipeline_config += ".json"
 
     def __str__(self) -> str:
-        string = "Configs:\n"
-        for key, value in self.__dict__.items():
-            string += f" >>>> {key}: {value}\n"
-        string += "That's all."
-        return string
+        table = tabulate(
+            [[k, v] for k, v in self.__dict__.items()],
+            colalign=("right", "left"),
+            tablefmt="pretty",
+            headers=["Argument", "Value"],
+            maxcolwidths=[None, 96],
+        )
+        return f"Configs:\n{table}\nThat's all."
 
 
 def parse_date(date: str | None = None):

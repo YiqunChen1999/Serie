@@ -132,7 +132,7 @@ class Agent:
                 logger.error(f"Failed to complete message: {message}\n{e}")
                 content = ""
                 if i < N - 1:
-                    logger.info(f"Retry {i + 1}/{N-1}...")
+                    logger.info(f"Retry {i + 1}/{N-1} ...")
                     sleep(30)
         self.history.append(role="user", content=message)
         self.history.append(role="assistant", content=content)
@@ -229,7 +229,10 @@ class Agent:
                 self.config.model, i + 1, len(chunks), len(chunk),
                 len(all_results), len(messages)
             ]
-            table = tabulate([data], headers=header, tablefmt="pretty")
+            table = tabulate(
+                [data],
+                headers=header, tablefmt="pretty", maxcolwidths=[None, 96],
+            )
             logger.info(f"\n{table}")
             start_time = time()
             all_results.extend(request(chunk))
@@ -237,7 +240,7 @@ class Agent:
             if sleep_time > 0 and i < len(chunks) - 1:
                 logger.info(
                     f"Sleeping for {sleep_time} seconds due to "
-                    f"the RPM limitation ({requests_per_minute})..."
+                    f"the RPM limitation ({requests_per_minute}) ..."
                 )
                 sleep(sleep_time)
         return all_results

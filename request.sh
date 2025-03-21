@@ -10,7 +10,7 @@ main="$script_folder/serie/main.py"
 
 # Function to run jobs in background
 run_job() {
-    nohup $python $main --pipeline Request >> ./outputs/scheduled-yesterday.txt &
+    nohup $python $main --pipeline Request --overwrite True >> ./outputs/scheduled-yesterday.txt &
     nohup $python $main --pipeline Request --datetime $(date -v-3d +%Y-%m-%d) >> ./outputs/scheduled.txt &
     echo "Submitted job to background at $(date)"
 }

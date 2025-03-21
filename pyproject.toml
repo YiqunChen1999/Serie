@@ -20,7 +20,7 @@ dependencies = [
     "arxiv",
     "pyyaml",
     "openai",
-    "tabulate",
+    "tabulate[widechars]",
     "openreview-py",
     "beautifulsoup4",
     "html5lib",

@@ -1,7 +1,7 @@
-
 import os
 import time
 import inspect
+from tabulate import tabulate
 
 from serie.config import Configs
 from serie.utils.logging import create_logger
@@ -44,7 +44,13 @@ def forward_plugins_once(
         args = prepare_plugins_args_from_configs(cfgs, plugin_names, cls)
         if plugins_configs and name in plugins_configs:
             args.update(plugins_configs[name])
-        str_args = "\n".join([f">>>> {k}: {v}" for k, v in args.items()])
+        str_args = tabulate(
+            [[k, v] for k, v in args.items()],
+            tablefmt="pretty",
+            colalign=("right", "left"),
+            headers=["Argument", "Value"],
+            maxcolwidths=[None, 96],
+        )
         logger.info(
             f"Running plugin {cls.__name__} with following args:\n{str_args}"
         )
@@ -55,7 +61,7 @@ def forward_plugins_once(
 
 
 def check_plugin_data_class(papers: list[Paper]):
-    logger.info("Checking plugin data class...")
+    logger.info("Checking plugin data class ...")
     for paper in papers:
         keys = paper.local_plugin_data.keys()
         for key in keys:

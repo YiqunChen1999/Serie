@@ -54,7 +54,7 @@ class BasePlugin(ABC):
         self.check_status(papers, global_plugin_data)
         if self.status == PluginStatus.DONE:
             if not self.overwrite:
-                logger.info(
+                logger.warning(
                     "Plugin status is DONE and overwrite is False. "
                     "Skipping processing."
                 )

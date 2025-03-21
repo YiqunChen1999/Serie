@@ -29,7 +29,7 @@ def translation_instruction():
 class TranslatorData(BasePluginData):
     plugin_name: str = plugin_name()
     model: str = ""
-    translated_summary: str = ""
+    translated_abstract: str = ""
     translated_title: str = ""
     save_as_text: bool = True
 
@@ -37,7 +37,7 @@ class TranslatorData(BasePluginData):
         text = (
             f"### TRANSLATED\n\n"
             f"**{self.translated_title}**\n\n"
-            f"{self.translated_summary}"
+            f"{self.translated_abstract}"
         )
         return text
 
@@ -71,7 +71,7 @@ class Translator(BasePlugin):
         datas = [d for d in datas if d is not None]
         for d in datas:
             assert isinstance(d, TranslatorData)
-            if d.translated_summary:
+            if d.translated_abstract:
                 self.status = PluginStatus.DONE
                 return
         self.status = PluginStatus.TODO
@@ -89,13 +89,13 @@ class Translator(BasePlugin):
 
     def translate_batch(self, papers: list[Paper]) -> list[Paper]:
         titles = [r.title for r in papers if self.requires_translation(r)]
-        summaries = [
+        abstracts = [
             r.abstract for r in papers if self.requires_translation(r)
         ]
         papers_to_translate = [
             r for r in papers if self.requires_translation(r)
         ]
-        logger.info(f"Translating {len(titles)} titles...")
+        logger.info(f"Translating {len(titles)} titles ...")
         prompts = [
             f"Given the following text:\n\n{t}\n\n{translation_instruction()}"
             for t in titles
@@ -104,23 +104,23 @@ class Translator(BasePlugin):
         responses = [responses] if isinstance(responses, str) else responses
         translated_titles = responses
 
-        logger.info(f"Translating {len(summaries)} summaries...")
+        logger.info(f"Translating {len(abstracts)} abstracts ...")
         prompts = [
             f"Given the following text:\n\n{s}\n\n{translation_instruction()}"
-            for s in summaries
+            for s in abstracts
         ]
         responses = self.agent(prompts, mode=self.mode)
         responses = [responses] if isinstance(responses, str) else responses
-        translated_summaries = responses
+        translated_abstracts = responses
         for result, title, translation in zip(papers_to_translate,
                                               translated_titles,
-                                              translated_summaries):
+                                              translated_abstracts):
             plugin = result.local_plugin_data.get(plugin_name(), None)
             if plugin is None:
                 result.add_plugin_data(TranslatorData(model=self.agent.model))
             plugin = result.local_plugin_data[plugin_name()]
             assert isinstance(plugin, TranslatorData)
-            plugin.translated_summary = translation
+            plugin.translated_abstract = translation
             plugin.translated_title = title
         return papers
 
@@ -128,7 +128,7 @@ class Translator(BasePlugin):
         papers_to_translate = [
             r for r in papers if self.requires_translation(r)
         ]
-        logger.info(f"Translating {len(papers_to_translate)} summaries...")
+        logger.info(f"Translating {len(papers_to_translate)} abstracts ...")
         for idx, result in enumerate(papers_to_translate):
             abstract = result.abstract
             logger.info(
@@ -144,7 +144,7 @@ class Translator(BasePlugin):
                 result.add_plugin_data(TranslatorData(model=self.agent.model))
             plugin = result.local_plugin_data[plugin_name()]
             assert isinstance(plugin, TranslatorData)
-            plugin.translated_summary = translation
+            plugin.translated_abstract = translation
         return papers
 
     def requires_translation(self, result: Paper) -> bool:

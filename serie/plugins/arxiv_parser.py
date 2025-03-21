@@ -78,7 +78,7 @@ class ArxivParser(BasePlugin):
         return papers
 
     def deduplicate(self, papers: list[Paper]):
-        logger.info(f"Deduplicating papers for {len(papers)} items papers...")
+        logger.info(f"Deduplicating papers for {len(papers)} items papers ...")
         if len(papers) == 0:
             return papers
         if len(papers) == 1:

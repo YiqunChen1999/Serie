@@ -122,7 +122,7 @@ class ResultSaver(BasePlugin):
                 papers: list[Paper],
                 global_plugin_data: GlobalPluginData):
         markdown_table = global_plugin_data.data.get("MarkdownTableMaker", "")
-        logger.info(f"Saving {len(papers)} papers...")
+        logger.info(f"Saving {len(papers)} papers ...")
         self.save_papers(papers, markdown_table)
         return papers
 

@@ -126,18 +126,18 @@ class LanguageModelBasedKeywordsFilter(BasePlugin):
         if len(papers_to_process) == 0:
             return papers
         N = len(papers_to_process)
-        logger.info(f"Processing {N} papers in batch...")
+        logger.info(f"Processing {N} papers in batch ...")
         for keyword, interested in self.interested_topics.items():
-            logger.info(f"Creating prompts related to {interested}...")
+            logger.info(f"Creating prompts related to {interested} ...")
             discarded = self.discarded_topics.get(keyword, "")
             prompts.extend(
                 prepare_prompts(papers_to_process, interested, discarded)
             )
-        logger.info("Sending prompts to the agent...")
+        logger.info("Sending prompts to the agent ...")
         mode = TaskMode.BATCH if self.batch_mode else TaskMode.CONCURRENT
         responses = self.agent(prompts, mode=mode)
         responses = [responses] if isinstance(responses, str) else responses
-        logger.info("Processing responses...")
+        logger.info("Processing responses ...")
         keywords = list(self.interested_topics.keys())
         for i, r in enumerate(responses):
             if "<-|RESULT: TRUE|->" in r or "<-|RESULT: FALSE|->" not in r:
@@ -165,14 +165,14 @@ class LanguageModelBasedKeywordsFilter(BasePlugin):
         if len(papers_to_process) == 0:
             return papers
         N = len(papers_to_process)
-        logger.info(f"Processing {N} papers in single...")
+        logger.info(f"Processing {N} papers in single ...")
         for keyword, interested in self.interested_topics.items():
-            logger.info(f"Processing {interested}...")
+            logger.info(f"Processing {interested} ...")
             discarded = self.discarded_topics.get(keyword, "")
             for i, paper in enumerate(papers_to_process):
                 prompt = prepare_prompts([paper], interested, discarded)[0]
                 logger.info(
-                    f"Processing {i+1}-th of {N} paper of keyword {keyword}..."
+                    f"Processing {i+1}-th of {N} paper of keyword {keyword}"
                 )
                 r = self.agent.complete_single(prompt)
                 if "<-|RESULT: TRUE|->" in r or "<-|RESULT: FALSE|->" not in r:
