@@ -57,6 +57,9 @@ def forward_plugins_once(
         plugin: BasePlugin = cls(**args)
         papers: list[Paper] = plugin(papers, global_plugin_data)
         papers = check_plugin_data_class(papers)
+        if name == "ResultLoader" and len(papers) == 0:
+            logger.info("No papers found, setting overwrite to True.")
+            cfgs.overwrite = True
     return papers
 
 
