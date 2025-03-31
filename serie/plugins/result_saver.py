@@ -121,6 +121,8 @@ class ResultSaver(BasePlugin):
     def process(self,
                 papers: list[Paper],
                 global_plugin_data: GlobalPluginData):
+        if len(papers) == 0:
+            return papers
         markdown_table = global_plugin_data.data.get("MarkdownTableMaker", "")
         logger.info(f"Saving {len(papers)} papers ...")
         self.save_papers(papers, markdown_table)
