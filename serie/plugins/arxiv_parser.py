@@ -64,15 +64,18 @@ class ArxivParser(BasePlugin):
                 if item_of_result is None:
                     logger.warning(f"Item not found for {result.url}")
                     continue
-                result.version = item_of_result["version"]
+                result.update(item_of_result)
                 for key, val in item_of_result["local_plugin_data"].items():
                     if key not in result.local_plugin_data.keys():
                         result.local_plugin_data[key] = val
                     else:
                         data = result.get_plugin_data(key)
-                        assert data is not None
+                        assert data is not None and isinstance(val, dict)
                         for k, v in val.items():
-                            setattr(data, k, v)
+                            if isinstance(data, dict):
+                                data[k] = v
+                            else:
+                                setattr(data, k, v)
             papers.extend(results)
         papers = self.deduplicate(papers)
         return papers

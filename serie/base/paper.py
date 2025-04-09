@@ -1,5 +1,6 @@
 
 import os
+from typing import Union
 from enum import Enum
 from copy import deepcopy
 from datetime import datetime
@@ -214,6 +215,87 @@ class Paper:
             "custom_fields": self.custom_fields,
         }
         return deepcopy(data)
+
+    def update_authors(self, authors: str | Author | list[Author] | list[str]):
+        if isinstance(authors, list):
+            self.authors = [
+                Author(a) if isinstance(a, str) else a for a in authors
+            ]
+        elif isinstance(authors, Author):
+            self.authors = [authors]
+        elif isinstance(authors, str):
+            self.authors = [Author(authors)]
+        else:
+            raise ValueError(
+                f"Invalid authors type: {type(authors)}. "
+                f"Expected list or Author."
+            )
+
+    def update_links(self, links: str | Link | list[Link] | list[str]):
+        if isinstance(links, list):
+            self.links = [
+                Link(link) if isinstance(link, str) else link for link in links
+            ]
+        elif isinstance(links, Link):
+            self.links = [links]
+        elif isinstance(links, str):
+            self.links = [Link(links)]
+        else:
+            raise ValueError(
+                f"Invalid links type: {type(links)}. "
+                f"Expected list or Link."
+            )
+        self.links = [self.url, self.pdf_url] + self.links
+        self.links = list(set(self.links))
+
+    def update_url(self, url: str | Link):
+        if isinstance(url, Link):
+            self.url = url
+        elif isinstance(url, str):
+            self.url = Link(url)
+        else:
+            raise ValueError(
+                f"Invalid url type: {type(url)}. "
+                f"Expected str or Link."
+            )
+        if self.url.tag != LinkEnum.ABSTRACT:
+            self.url.tag = LinkEnum.ABSTRACT
+
+    def update_pdf_url(self, pdf_url: str | Link):
+        if isinstance(pdf_url, Link):
+            self.pdf_url = pdf_url
+        elif isinstance(pdf_url, str):
+            self.pdf_url = Link(pdf_url)
+        else:
+            raise ValueError(
+                f"Invalid pdf_url type: {type(pdf_url)}. "
+                f"Expected str or Link."
+            )
+        if self.pdf_url.tag != LinkEnum.PDF:
+            self.pdf_url.tag = LinkEnum.PDF
+
+    def update(self, inputs: dict):
+        keys: list[str] = list(self.asdict().keys())
+        if isinstance(inputs, Paper):
+            inputs = inputs.asdict()
+        for key, val in inputs.items():
+            if key == "authors":
+                self.update_authors(val)
+            elif key == "links":
+                self.update_links(val)
+            elif key == "url":
+                self.update_url(val)
+            elif key == "pdf_url":
+                self.update_pdf_url(val)
+            elif key in keys:
+                if isinstance(val, list):
+                    val = [v for v in val if v]
+                if isinstance(val, str):
+                    val = val.strip()
+                if val:
+                    setattr(self, key, val)
+            else:
+                logger.warning(f"Key {key} is invalid for Paper.")
 
     def __str__(self) -> str:
         return self.url.href
