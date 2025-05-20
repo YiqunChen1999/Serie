@@ -109,7 +109,9 @@ class ResultSaver(BasePlugin):
         ]
         dates = list(set(dates))
         for date in dates:
-            folder = osp.join(self.markdown_directory, date)
+            year = date.split("-")[0]
+            year_month = "-".join(date.split("-")[:2])
+            folder = osp.join(self.markdown_directory, year, year_month, date)
             if not osp.exists(folder):
                 os.makedirs(folder, exist_ok=True)
             elif len(os.listdir(folder)) > 0:
@@ -133,7 +135,7 @@ class ResultSaver(BasePlugin):
         self.save_markdown_file(papers, markdown_table)
         self.save_text(papers)
         self.save_by_keywords(papers)
-        self.make_navigation_list(papers)
+        # self.make_navigation_list(papers)
 
     def save_jsonl(self, papers: list[Paper]):
         path = os.path.join(self.output_directory, 'papers.jsonl')
@@ -142,7 +144,14 @@ class ResultSaver(BasePlugin):
     def save_markdown_file(self, papers: list[Paper], markdown_table: str):
         if not markdown_table:
             return
-        path = os.path.join(self.markdown_directory, 'papers.md')
+        dates = [
+            p.update_date.strftime("%Y-%m-%d") for p in papers
+        ]
+        date = list(set(dates))[0]
+        year = date.split("-")[0]
+        year_month = "-".join(date.split("-")[:2])
+        folder = osp.join(self.markdown_directory, year, year_month, date)
+        path = os.path.join(folder, 'papers.md')
         logger.info(f"Saving markdown table to {path}")
         with open(path, 'w') as fp:
             fp.write(METAINFO_TEMPLATE.format(counts=len(papers)))
@@ -206,7 +215,11 @@ class ResultSaver(BasePlugin):
         dates = [p.update_date.strftime("%Y-%m-%d") for p in filtered_papers]
         dates = list(set(dates))
         assert len(dates) == 1
-        folder = osp.join(self.markdown_directory, dates[0])
+        date = dates[0]
+        year = date.split("-")[0]
+        year_month = "-".join(date.split("-")[:2])
+        folder = osp.join(self.markdown_directory, year, year_month, date)
+        # folder = osp.join(self.markdown_directory, dates[0])
         os.makedirs(folder, exist_ok=True)
         path = osp.join(folder, f'papers @ {keyword}.md')
         logger.info(f"Saving markdown file to {path}")
@@ -214,7 +227,14 @@ class ResultSaver(BasePlugin):
             fp.write(content)
 
     def make_navigation_list(self, papers: list[Paper]):
-        path = osp.join(self.markdown_directory, "_Navigation.md")
+        dates = [
+            p.update_date.strftime("%Y-%m-%d") for p in papers
+        ]
+        date = list(set(dates))[0]
+        year = date.split("-")[0]
+        year_month = "-".join(date.split("-")[:2])
+        folder = osp.join(self.markdown_directory, year, year_month, date)
+        path = osp.join(folder, "_Navigation.md")
         osp.basename(self.markdown_directory)
         dates = [p.update_date.strftime("%Y-%m-%d") for p in papers]
         dates = list(set(dates))

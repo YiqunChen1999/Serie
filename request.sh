@@ -1,4 +1,5 @@
 #!/bin/zsh
+# nohup ./request.sh >> outputs/nohup.out &
 # filepath: /Users/yiqunchen/Library/CloudStorage/OneDrive-中国科学院自动化研究所/projects/arxiv/arxiv_manager.sh
 
 source /Users/yiqunchen/.zshrc
