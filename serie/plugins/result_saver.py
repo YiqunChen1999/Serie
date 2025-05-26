@@ -42,9 +42,7 @@ for (let i=0; i < num_items; i += num_cols){
     reshaped.push(files.slice(i, i+num_cols));
 }
 
-dv.table(["#_hide_header ", "#_hide_header ", "#_hide_header "],
-    reshaped
-);
+dv.table([], reshaped);
 ```
 
 """

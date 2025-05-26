@@ -17,7 +17,7 @@ import json
 import os
 import sys
 import types
-from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser, ArgumentTypeError
+from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser as _ArgumentParser, ArgumentTypeError
 from copy import copy
 from enum import Enum
 from inspect import isclass
@@ -107,7 +107,7 @@ def HfArg(
     return dataclasses.field(metadata=metadata, default=default, default_factory=default_factory, **kwargs)
 
 
-class ArgumentParser(ArgumentParser):
+class ArgumentParser(_ArgumentParser):
     """
     This subclass of `argparse.ArgumentParser` uses type hints on dataclasses to generate arguments.
 
@@ -137,7 +137,7 @@ class ArgumentParser(ArgumentParser):
             self._add_dataclass_arguments(dtype)
 
     @staticmethod
-    def _parse_dataclass_field(parser: ArgumentParser, field: dataclasses.Field):
+    def _parse_dataclass_field(parser: _ArgumentParser, field: dataclasses.Field):
         field_name = f"--{field.name}"
         kwargs = field.metadata.copy()
         # field.metadata is not used at all by Data Classes,
@@ -311,7 +311,7 @@ class ArgumentParser(ArgumentParser):
             # args files specified via command line flag should overwrite default args files so we add them last
             if args_file_flag:
                 # Create special parser just to extract the args_file_flag values
-                args_file_parser = ArgumentParser()
+                args_file_parser = _ArgumentParser()
                 args_file_parser.add_argument(args_file_flag, type=str, action="append")
 
                 # Use only remaining args for further parsing (remove the args_file_flag)

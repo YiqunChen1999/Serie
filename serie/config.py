@@ -14,7 +14,7 @@ DEFAULT: dict = import_config(PATH)
 @dataclass
 class Configs:
     datetime: str = field(
-        default=DEFAULT.get('datetime', None),
+        default=DEFAULT.get('datetime', ""),
         metadata={"help": "Which date to search for."})
     max_retries_num: int = field(
         default=DEFAULT.get('max_retries_num', 16),
@@ -70,7 +70,7 @@ class Configs:
 
 
 def parse_date(date: str | None = None):
-    if date is None:
+    if not date:
         today = datetime.date.today()
         yesterday = today - datetime.timedelta(days=1)
         date = (f"{yesterday.strftime('%Y%m%d%H%M')} "

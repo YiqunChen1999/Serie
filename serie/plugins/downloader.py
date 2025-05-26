@@ -1,5 +1,5 @@
 
-import platform
+# import platform
 import os.path as osp
 from dataclasses import field, dataclass
 from glob import glob
@@ -61,7 +61,8 @@ PAPER_NOTE_TEMPLATE = """
 
 # 1. 论文笔记
 ## 1.0. 本地文件
-[{}]({})
+Windows: [{}]({})
+MacOS: [{}]({})
 
 ## 1.1. 文章摘要
 
@@ -324,38 +325,39 @@ def save_markdown_note(dir_markdown_note: str, title: str, content: str):
     if not osp.exists(path):
         with open(path, 'w') as fp:
             fp.write(content)
+        logger.info(f"Markdown file saved to {path}")
     else:
-        logger.warning("Markdown file exists, I won't overwrite it.")
+        logger.warning(f"Markdown file exists, I won't overwrite it:\n{path}")
 
 
 def prepare_markdown_content(paper: Paper, dir_pdf: str):
+    def win_path(dir_pdf: str, filename: str):
+        return (osp.abspath(osp.join(dir_pdf, filename))
+            .replace('/', "\\")  # bad way, need refactor.
+            .replace("\\mnt\\c", "file:///C:")
+            .replace("\\mnt\\d", "file:///D:")
+            .replace("\\mnt\\e", "file:///E:")
+            .replace("\\mnt\\f", "file:///F:")
+            .replace("\\mnt\\g", "file:///G:")
+            .replace("\\mnt\\h", "file:///H:")
+            .replace("\\mnt\\i", "file:///I:")
+        )
+
+    def mac_path(dir_pdf: str, filename: str):
+        return "file://" + osp.join(osp.abspath(dir_pdf), filename).replace(" ", "%20")
+
     filename = paper.title + ".pdf"
     meta = OBSIDIAN_METAINFO.format(
         paper.venue, paper.url.href, paper.code_link.href,
         paper.online_date.strftime("%Y-%m-%d")[:10],
         "\n"+"\n".join([" - "+t for t in paper.tags])
     )
-    # check if the platform is windows
-    if platform.system() == "Windows":
-        temp = PAPER_NOTE_TEMPLATE.format(
-            filename,
-            (osp.abspath(osp.join(dir_pdf, filename))
-             .replace('/', "\\")  # bad way, need refactor.
-             .replace("\\mnt\\c", "file:///C:")
-             .replace("\\mnt\\d", "file:///D:")
-             .replace("\\mnt\\e", "file:///E:")
-             .replace("\\mnt\\f", "file:///F:")
-             .replace("\\mnt\\g", "file:///G:")
-             .replace("\\mnt\\h", "file:///H:")
-             .replace("\\mnt\\i", "file:///I:")))
-    else:
-        # abspath = osp.abspath(osp.join(dir_pdf, filename))
-        # abspath = "file://" + abspath.replace(" ", "%20")
-        path = osp.join(osp.abspath(dir_pdf), filename).replace(" ", "%20")
-        # path = osp.join("../../Papers", filename).replace(" ", "%20")
-        path = "file://" + path
-        temp = PAPER_NOTE_TEMPLATE.format(filename, path)
-    content = meta + OBSIDIAN_NAVIGATION + temp
+    temp = PAPER_NOTE_TEMPLATE.format(
+        filename, win_path(dir_pdf, filename),
+        filename, mac_path(dir_pdf, filename)
+    )
+    # content = meta + OBSIDIAN_NAVIGATION + temp
+    content = meta + temp
     return content
 
 
