@@ -1,6 +1,5 @@
 
 import os
-from typing import Union
 from enum import Enum
 from copy import deepcopy
 from datetime import datetime
