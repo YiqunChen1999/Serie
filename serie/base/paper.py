@@ -342,7 +342,7 @@ class Paper:
 def format_valid_title(paper: Paper) -> str:
     title = (
         paper.title
-        .replace(": ", "：").replace("? ", "？").replace("?", "？")
+        .replace(": ", " -- ").replace("? ", "？").replace("?", "？")
         .replace("<", "").replace(">", "")
         .replace('"', "'").replace("/", "").replace("\\", "")
         .replace("|", "or").replace("*", "Star")
