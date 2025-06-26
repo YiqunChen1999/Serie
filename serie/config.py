@@ -55,8 +55,8 @@ class Configs:
         self.date = self.datetime.strip('lastUpdatedDate:[')[:8]
         self.output_directory = osp.join(self.output_directory,
                                          self.datetime.split('[')[1][:8])
-        if self.pipeline_config and not self.pipeline_config.endswith(".json"):
-            self.pipeline_config += ".json"
+        if self.pipeline_config and not self.pipeline_config.endswith(".py"):
+            self.pipeline_config += ".py"
 
     def __str__(self) -> str:
         table = tabulate(

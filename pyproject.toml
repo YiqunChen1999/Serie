@@ -8,7 +8,7 @@ version = "0.0.1"
 authors = [
     {name = "Yiqun Chen", email="chenyiqun2021@ia.ac.cn"},
 ]
-description = "Sequence Modeling for Unified Segmentation."
+description = "A Python library to download and manage papers of interest from arXiv, OpenReview, and other sources."
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
@@ -20,7 +20,8 @@ dependencies = [
     "arxiv",
     "pyyaml",
     "openai",
-    "tabulate[widechars]",
+    "wcwidth",
+    "tabulate @ git+https://github.com/astanin/python-tabulate@master",
     "openreview-py",
     "beautifulsoup4",
     "html5lib",

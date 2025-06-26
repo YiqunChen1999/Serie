@@ -4,13 +4,14 @@
 from serie.config import parse_cfgs
 from serie.utils.io import import_config
 from serie.utils.logging import create_logger
-from serie.utils.misc import get_class_config_file_path
+from serie.utils.misc import get_class_config_file_path, apply_patch
 from serie.pipelines import get_pipeline_cls
 
 logger = create_logger(__name__)
 
 
 def main():
+    apply_patch()
     cfgs = parse_cfgs()
     global logger
     logger = create_logger(__name__, cfgs.output_directory)

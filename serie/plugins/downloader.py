@@ -61,7 +61,9 @@ PAPER_NOTE_TEMPLATE = """
 
 # 1. 论文笔记
 ## 1.0. 本地文件
+
 Windows: [{}]({})
+
 MacOS: [{}]({})
 
 ## 1.1. 文章摘要
@@ -241,7 +243,7 @@ class Downloader(BasePlugin):
                 continue
             save_markdown_note(
                 osp.join(self.dir_markdown_note, data.subdir),
-                paper.title,
+                format_valid_title(paper),
                 prepare_markdown_content(paper, self.dir_pdf),
             )
         return papers
