@@ -21,7 +21,9 @@ config = {
                 "num_requested": None
             },
             "ResultSaver": {
-                "keywords_filter_plugin": "LanguageModelBasedKeywordsFilter"
+                "keywords_filter_plugin": "DefaultKeywordsFilter",
+                "output_directory": "outputs/CVPR/2025",
+                "markdown_directory": "../../Notebook/journal/CVPR/2025",
             },
             "Translator": {
                 "keywords_filter_plugin": "DefaultKeywordsFilter"
