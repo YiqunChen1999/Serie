@@ -29,18 +29,16 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-train = ["deepspeed>=0.12.6", "ninja", "wandb"]
 build = ["build", "twine"]
 
 [project.urls]
-homepage = "https://github.com/yiqunchen1999/dev-serie"
-repository = "https://github.com/yiqunchen1999/dev-serie"
-documentation = "https://github.com/yiqunchen1999/dev-serie"
+homepage = "https://github.com/yiqunchen1999/Serie"
+repository = "https://github.com/yiqunchen1999/Serie"
+documentation = "https://github.com/yiqunchen1999/Serie"
 
 [tool.setuptools.packages.find]
-exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*",
-           "scripts*", "tests*", "./cache", "./data", "./models",
-           "./runs", "./outputs", "./tmp", "./temp"]
+exclude = ["assets*", "docs", "dist*", "playground*",
+           "scripts*", "tests*", "./.cache", "./outputs", "./tmp", "./temp"]
 
 [tool.wheel]
 where = ["."]
@@ -51,7 +49,5 @@ exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", 
 
 [tool.pyright]
 include = ["serie", "eval"]
-exclude = ["cache", "tests", "docs", "build", "dist", ".pytest_cache",
-           ".git", ".github", ".ruff", "data", "wandb", "logs", "checkpoints",
-           "runs", "results", "predictions", "submissions", "tmp",
-           "serie/utils/parser.py"]
+exclude = [".cache", "tests", "docs", "build", "dist", ".pytest_cache",
+           ".git", ".github", ".ruff", "tmp"]
