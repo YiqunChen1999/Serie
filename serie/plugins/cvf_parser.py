@@ -70,6 +70,12 @@ class CVFParser(BasePlugin):
                 url = osp.join(BASE_URL, url.lstrip("/"))
                 cache_path = osp.join(paper_folder, osp.basename(url))
                 info = parse_paper_info(url, cache_file=cache_path)
+                if not info:
+                    logger.warning_once(
+                        f"Failed to parse paper info from {url}. "
+                        f"Skipping this paper."
+                    )
+                    continue
                 info["title"] = info["title"] or a.text
                 info["url"] = url
                 paper = create_paper_from_cvf_data(info, date)
@@ -120,6 +126,8 @@ def parse_paper_info(
         max_retries: int = 3,
         sleep_time: int = 1) -> dict[str, str]:
     soup = request_html_content(url, cache_file, max_retries, sleep_time)
+    if soup is None:
+        return {}
     abstract = soup.find(id="abstract")
     if abstract:
         abstract = abstract.text.strip()
@@ -189,7 +197,8 @@ def request_html_content(
                 continue
             break
         if response is None:
-            raise ValueError(f"Failed to get {url}")
+            logger.error(f"Failed to get {url}")
+            return None
         txt = response.text
         if cache_file:
             with open(cache_file, "w") as f:
